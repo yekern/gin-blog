@@ -1,0 +1,28 @@
+{
+  "server": {
+    "debug": true,
+    "port": ":8080",
+    "static_prefix": "static",
+    "static_root": "public"
+  },
+  "database": {
+    "host": "127.0.0.1",
+    "port": "3306",
+    "username": "root",
+    "password": "mysql@1234",
+    "dbname": "blog"
+  },
+  "log": {
+    "filename": "api.log",
+    "max_size": 10,
+    "expired_date": 15,
+    "max_number": 15,
+    "compress": true,
+    "stack": true
+  },
+  "redis": {
+    "host": "",
+    "port": "",
+    "password": ""
+  }
+}
