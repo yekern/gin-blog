@@ -40,6 +40,13 @@ func (s *Server) registerStaticRoot() {
 
 // registerRouter 注册路由
 func (s *Server) registerRouter() {
+	s.Engine.NoRoute(func(c *gin.Context) {
+		c.JSON(http.StatusNotFound, gin.H{
+			"code":    http.StatusNotFound,
+			"message": "not found",
+		})
+		return
+	})
 	kernel.RegisterRouter(s.Engine)
 }
 

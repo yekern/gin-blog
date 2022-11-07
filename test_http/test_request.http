@@ -1,0 +1,2 @@
+GET http://localhost:8080/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjEsImV4cCI6MTY2NzgwNTYxMCwiaXNzIjoiU3lzdGVtIn0.7VEJ0ZL7EadjbwGVD6oE8ZveZutnJxB8lbyZJGLme5I

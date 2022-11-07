@@ -43,3 +43,7 @@ func InitLog() {
 	lg := zap.New(core, zap.AddCaller())
 	zap.ReplaceGlobals(lg)
 }
+
+func Record() *zap.Logger {
+	return zap.L()
+}

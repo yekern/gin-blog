@@ -24,5 +24,9 @@
     "host": "",
     "port": "",
     "password": ""
+  },
+  "jwt": {
+    "secret": "abc123456789",
+    "expired": 3600
   }
 }

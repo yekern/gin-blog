@@ -7,4 +7,5 @@ import (
 
 func RegisterAdminRoutes(router *gin.Engine) {
 	router.GET("/", api.UserApi{}.List)
+	router.GET("/password", api.UserApi{}.Password)
 }

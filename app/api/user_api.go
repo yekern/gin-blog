@@ -1,7 +1,8 @@
 package api
 
 import (
-	"esc.show/blog/app/service"
+	"esc.show/blog/pkg/utils"
+	"fmt"
 	"github.com/gin-gonic/gin"
 )
 
@@ -9,10 +10,17 @@ type UserApi struct {
 }
 
 func (a UserApi) List(ctx *gin.Context) {
-	var userService service.UserService
+	utils.NewResponse(ctx).SuccessOk()
+}
+
+func (a UserApi) Password(ctx *gin.Context) {
+	password, err := utils.NewPassword().EncodePassword("123456")
+	if err != nil {
+		fmt.Println("密码加密失败")
+	}
 	ctx.JSON(200, gin.H{
 		"code":    200,
 		"message": "ok",
-		"data":    userService.List(),
+		"data":    password,
 	})
 }

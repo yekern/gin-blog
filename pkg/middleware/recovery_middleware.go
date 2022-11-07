@@ -46,7 +46,12 @@ func ApiRecover(stack bool) gin.HandlerFunc {
 						zap.String("request", string(httpRequest)),
 					)
 				}
-				c.AbortWithStatus(http.StatusInternalServerError)
+				//c.AbortWithStatus(http.StatusInternalServerError)
+				c.JSON(http.StatusInternalServerError, gin.H{
+					"code":    http.StatusInternalServerError,
+					"message": err,
+				})
+				c.Abort()
 			}
 		}()
 		c.Next()
