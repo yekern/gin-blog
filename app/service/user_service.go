@@ -19,7 +19,7 @@ func (s UserService) List() *UsersList {
 	var users []model.User
 	var total int64
 	s.db.Query().Count(&total)
-	s.db.Query().Scopes(s.db.Paginate(1, 10)).Find(&users)
+	s.db.Paginate(1, 10).Find(&users)
 	return &UsersList{
 		Items: users,
 		Total: total,
