@@ -6,6 +6,8 @@ import (
 	"go.uber.org/zap"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
+	"time"
 )
 
 var db *gorm.DB
@@ -20,7 +22,18 @@ func InitDatabase() {
 		viper.GetString("database.port"),
 		viper.GetString("database.dbname"),
 	)
-	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	newLogger := logger.New(
+		GormLogger{},
+		logger.Config{
+			SlowThreshold:             200 * time.Millisecond,
+			Colorful:                  false,
+			IgnoreRecordNotFoundError: true,
+			LogLevel:                  logger.Info,
+		},
+	)
+	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
+		Logger: newLogger,
+	})
 	if err != nil {
 		zap.L().Error("数据库初始化失败", zap.String("error", err.Error()))
 	}

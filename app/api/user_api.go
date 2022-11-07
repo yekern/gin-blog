@@ -13,10 +13,11 @@ type UserApi struct {
 var userService service.UserService
 
 // Create 创建用户
-func (a UserApi) Create(ctx *gin.Context) {
+func (a *UserApi) Create(ctx *gin.Context) {
 	password, err := utils.NewPassword().EncodePassword("123456")
 	if err != nil {
 		utils.NewResponse(ctx).Error("密码不符合规范:" + err.Error())
+		return
 	}
 	user := &model.User{
 		Nickname: "Admin",
@@ -27,8 +28,10 @@ func (a UserApi) Create(ctx *gin.Context) {
 	user, err = userService.Create(user)
 	if err != nil {
 		utils.NewResponse(ctx).Error("用户创建失败:" + err.Error())
+		return
 	}
 	utils.NewResponse(ctx).Data(user)
+	return
 }
 
 // LoginForm 登录表单
@@ -38,7 +41,7 @@ type LoginForm struct {
 }
 
 // Login 登录
-func (a UserApi) Login(ctx *gin.Context) {
+func (a *UserApi) Login(ctx *gin.Context) {
 
 	var form LoginForm
 
@@ -56,7 +59,7 @@ func (a UserApi) Login(ctx *gin.Context) {
 }
 
 // Profile 获取个人资料
-func (u UserApi) Profile(ctx *gin.Context) {
+func (u *UserApi) Profile(ctx *gin.Context) {
 	userId := ctx.GetInt64("userId")
 	profile, err := userService.Profile(userId)
 	if err != nil {

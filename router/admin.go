@@ -7,8 +7,9 @@ import (
 )
 
 func RegisterAdminRoutes(router *gin.Engine) {
-	router.GET("/", api.UserApi{}.Create)
-	router.POST("/login", api.UserApi{}.Login)
+	var userApi api.UserApi
+	router.GET("/", userApi.Create)
+	router.POST("/login", userApi.Login)
 	router.Use(middleware.JWT())
-	router.GET("/profile", api.UserApi{}.Profile)
+	router.GET("/profile", userApi.Profile)
 }
