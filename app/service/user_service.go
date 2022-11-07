@@ -12,18 +12,27 @@ type UserService struct {
 	db *db.Model
 }
 
+// UsersList 分页结构体
 type UsersList struct {
 	Items []model.User `json:"items"`
 	Total int64        `json:"total"`
 }
 
+//UserFrom  新增用户表单
+type UserFrom struct {
+	Nickname string `json:"nickname" validate:"-"`
+	Username string `json:"username" validate:"required" label:"用户名"`
+	Password string `json:"password" validate:"required" label:"密码"`
+	Status   int64  `json:"status" validate:"-"`
+}
+
 // Create 创建用户
-func (s *UserService) Create(user *model.User) (*model.User, error) {
+func (s *UserService) Create(user *model.User) error {
 	result := s.db.Query().Create(user)
 	if result.Error != nil {
-		return nil, result.Error
+		return result.Error
 	}
-	return user, nil
+	return nil
 }
 
 // Login 登录
@@ -56,12 +65,12 @@ func (s *UserService) Profile(userId int64) (*resource.Profile, error) {
 	}, nil
 }
 
-func (s UserService) List() *UsersList {
+func (s UserService) List(page, pageSize int) *UsersList {
 
 	var users []model.User
 	var total int64
-	s.db.Query().Count(&total)
-	s.db.Paginate(1, 10).Find(&users)
+	s.db.Query().Model(&model.User{}).Count(&total)
+	s.db.Paginate(page, pageSize).Find(&users)
 	return &UsersList{
 		Items: users,
 		Total: total,

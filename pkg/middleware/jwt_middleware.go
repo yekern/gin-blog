@@ -11,7 +11,7 @@ func JWT() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		header := ctx.GetHeader("Authorization")
 		if header == "" {
-			utils.NewResponse(ctx).SetCode(http.StatusUnauthorized).Message("Unauthorized-token", nil)
+			utils.NewResponse(ctx).SetCode(http.StatusUnauthorized).Message("Unauthorized Miss Token", nil)
 			ctx.Abort()
 			return
 		}

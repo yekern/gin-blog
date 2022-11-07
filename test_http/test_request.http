@@ -1,9 +1,22 @@
-GET http://localhost:8080/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjEsImV4cCI6MTY2NzgwNTYxMCwiaXNzIjoiU3lzdGVtIn0.7VEJ0ZL7EadjbwGVD6oE8ZveZutnJxB8lbyZJGLme5I
+PUT http://localhost:8080/admin/users
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjQsImV4cCI6MTY2NzgzNTk3NywiaXNzIjoiU3lzdGVtIn0.QQldIwsUVhgZQDYyqctVSFoSrl7MqeZ7Qrjia1stIQE
+
+{
+  "username": "demo-7",
+  "password": "123456",
+  "nickname": "demo-7",
+  "status": 1
+}
 
 ###
 
-POST http://localhost:8080/login
+GET http://localhost:8080/admin/users
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjQsImV4cCI6MTY2NzgzNTk3NywiaXNzIjoiU3lzdGVtIn0.QQldIwsUVhgZQDYyqctVSFoSrl7MqeZ7Qrjia1stIQE
+###
+
+POST http://localhost:8080/admin/auth/login
 Accept: application/json
 Content-Type: application/json
 
@@ -11,7 +24,8 @@ Content-Type: application/json
   "username": "admin",
   "password": "123456"
 }
+
 ###
 
-GET http://localhost:8080/profile
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjQsImV4cCI6MTY2NzgxMzc0NywiaXNzIjoiU3lzdGVtIn0.m_rJm0irpg_I3XTEWG4ik2jGGr8BkXxUbHHfBRmtTYY
+GET http://localhost:8080/admin/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjQsImV4cCI6MTY2NzgzMTk2MywiaXNzIjoiU3lzdGVtIn0.kjxGGxL82nuTasVR_1JrAH1kSh08YeXi_E4sXkEEejg

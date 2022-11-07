@@ -31,7 +31,6 @@ func ApiRecover(stack bool) gin.HandlerFunc {
 						zap.String("request", string(httpRequest)),
 					)
 					c.Error(err.(error))
-					c.Abort()
 					return
 				}
 				if stack {
@@ -47,11 +46,6 @@ func ApiRecover(stack bool) gin.HandlerFunc {
 					)
 				}
 				c.AbortWithStatus(http.StatusInternalServerError)
-				//c.JSON(http.StatusInternalServerError, gin.H{
-				//	"code":    http.StatusInternalServerError,
-				//	"message": err,
-				//})
-				//c.Abort()
 			}
 		}()
 		c.Next()

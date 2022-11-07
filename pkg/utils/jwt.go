@@ -60,7 +60,6 @@ func (j *Jwt) Decode(tokenString string) (*CustomClaims, error) {
 		}
 		return []byte(j.secret), nil
 	})
-	fmt.Println(token.Claims)
 	if claims, ok := token.Claims.(*CustomClaims); ok && token.Valid {
 		return claims, nil
 	} else {

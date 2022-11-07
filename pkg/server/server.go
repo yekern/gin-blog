@@ -45,7 +45,7 @@ func (s *Server) registerRouter() {
 			"code":    http.StatusNotFound,
 			"message": "not found",
 		})
-		return
+		c.Abort()
 	})
 	kernel.RegisterRouter(s.Engine)
 }
@@ -89,8 +89,8 @@ func (s *Server) start() {
 // NewServer 初始化Web服务
 func NewServer() {
 	server.registerStaticRoot()
-	server.registerMiddleware()
 	server.registerRouter()
+	server.registerMiddleware()
 	server.start()
 }
 

@@ -5,6 +5,8 @@ import (
 	"esc.show/blog/model"
 	"esc.show/blog/pkg/utils"
 	"github.com/gin-gonic/gin"
+	"github.com/gookit/validate"
+	"strconv"
 )
 
 type UserApi struct {
@@ -12,26 +14,39 @@ type UserApi struct {
 
 var userService service.UserService
 
+func (a *UserApi) Index(ctx *gin.Context) {
+	page := ctx.DefaultQuery("page", "1")
+	pageSize := ctx.DefaultQuery("page_size", "10")
+
+	pageInt, _ := strconv.Atoi(page)
+	pageSizeInt, _ := strconv.Atoi(pageSize)
+
+	list := userService.List(pageInt, pageSizeInt)
+
+	utils.NewResponse(ctx).Data(list)
+}
+
 // Create 创建用户
 func (a *UserApi) Create(ctx *gin.Context) {
-	password, err := utils.NewPassword().EncodePassword("123456")
+
+	var user model.User
+	err := ctx.ShouldBind(&user)
 	if err != nil {
-		utils.NewResponse(ctx).Error("密码不符合规范:" + err.Error())
+		utils.NewResponse(ctx).Error(err.Error())
 		return
 	}
-	user := &model.User{
-		Nickname: "Admin",
-		Username: "admin",
-		Password: password,
-		Status:   1,
-	}
-	user, err = userService.Create(user)
-	if err != nil {
-		utils.NewResponse(ctx).Error("用户创建失败:" + err.Error())
+	v := validate.Struct(&user)
+	if !v.Validate() {
+		utils.NewResponse(ctx).Error(v.Errors.One())
 		return
 	}
-	utils.NewResponse(ctx).Data(user)
-	return
+	//json["password"], _ = utils.NewPassword().EncodePassword(string(json["password"].([]byte)))
+	err = userService.Create(&user)
+	if err != nil {
+		utils.NewResponse(ctx).Error(err.Error())
+		return
+	}
+	utils.NewResponse(ctx).SuccessOk()
 }
 
 // LoginForm 登录表单
@@ -55,11 +70,10 @@ func (a *UserApi) Login(ctx *gin.Context) {
 		return
 	}
 	utils.NewResponse(ctx).Data(utils.NewJWT().CreateToken(user.Id))
-	return
 }
 
 // Profile 获取个人资料
-func (u *UserApi) Profile(ctx *gin.Context) {
+func (a *UserApi) Profile(ctx *gin.Context) {
 	userId := ctx.GetInt64("userId")
 	profile, err := userService.Profile(userId)
 	if err != nil {
@@ -67,5 +81,4 @@ func (u *UserApi) Profile(ctx *gin.Context) {
 		return
 	}
 	utils.NewResponse(ctx).Data(profile)
-	return
 }

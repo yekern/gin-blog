@@ -7,9 +7,14 @@ import (
 )
 
 func RegisterAdminRoutes(router *gin.Engine) {
-	var userApi api.UserApi
-	router.GET("/", userApi.Create)
-	router.POST("/login", userApi.Login)
-	router.Use(middleware.JWT())
-	router.GET("/profile", userApi.Profile)
+	admin := router.Group("/admin")
+	{
+		var userApi api.UserApi
+		admin.POST("/auth/login", userApi.Login)
+		admin.Use(middleware.JWT())
+		admin.GET("/profile", userApi.Profile)
+		admin.GET("/users", userApi.Index)
+		admin.PUT("/users", userApi.Create)
+	}
+
 }
