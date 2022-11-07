@@ -1,8 +1,11 @@
 package service
 
 import (
+	"errors"
+	"esc.show/blog/app/resource"
 	"esc.show/blog/model"
 	"esc.show/blog/pkg/db"
+	"esc.show/blog/pkg/utils"
 )
 
 type UserService struct {
@@ -12,6 +15,45 @@ type UserService struct {
 type UsersList struct {
 	Items []model.User `json:"items"`
 	Total int64        `json:"total"`
+}
+
+// Create 创建用户
+func (s *UserService) Create(user *model.User) (*model.User, error) {
+	result := s.db.Query().Create(user)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	return user, nil
+}
+
+// Login 登录
+func (s *UserService) Login(username, password string) (*model.User, error) {
+	var user model.User
+	result := s.db.Query().Where("username = ? ", username).First(&user)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	if utils.NewPassword().DeCodePassword(password, user.Password) {
+		if user.Status == 0 {
+			return nil, errors.New("账户已停用")
+		}
+		return &user, nil
+	} else {
+		return nil, errors.New("用户名密码错误")
+	}
+}
+
+func (s *UserService) Profile(userId int64) (*resource.Profile, error) {
+	var user model.User
+	result := s.db.Query().Where("id =?", userId).First(&user)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	return &resource.Profile{
+		Username: user.Username,
+		Nickname: user.Nickname,
+		Avatar:   user.Avatar,
+	}, nil
 }
 
 func (s UserService) List() *UsersList {

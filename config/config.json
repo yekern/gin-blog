@@ -18,7 +18,8 @@
     "expired_date": 15,
     "max_number": 15,
     "compress": true,
-    "stack": true
+    "stack": true,
+    "level": "debug"
   },
   "redis": {
     "host": "",

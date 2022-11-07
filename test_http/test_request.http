@@ -1,2 +1,17 @@
 GET http://localhost:8080/
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjEsImV4cCI6MTY2NzgwNTYxMCwiaXNzIjoiU3lzdGVtIn0.7VEJ0ZL7EadjbwGVD6oE8ZveZutnJxB8lbyZJGLme5I
+
+###
+
+POST http://localhost:8080/login
+Accept: application/json
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "123456"
+}
+###
+
+GET http://localhost:8080/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjQsImV4cCI6MTY2NzgxMzc0NywiaXNzIjoiU3lzdGVtIn0.m_rJm0irpg_I3XTEWG4ik2jGGr8BkXxUbHHfBRmtTYY

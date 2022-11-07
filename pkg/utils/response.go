@@ -30,6 +30,7 @@ func (r *Response) Message(message string, data interface{}) {
 	r.msg.Message = message
 	r.msg.Data = data
 	r.ctx.JSON(http.StatusOK, r.msg)
+	r.ctx.Abort()
 	return
 }
 

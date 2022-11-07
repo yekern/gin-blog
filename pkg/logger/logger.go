@@ -35,7 +35,7 @@ func InitLog() {
 	}
 	writeSync := zapcore.AddSync(chunkLogger)
 	var l zapcore.Level
-	err := l.UnmarshalText([]byte("debug"))
+	err := l.UnmarshalText([]byte(viper.GetString("log.level")))
 	if err != nil {
 		panic(err)
 	}
