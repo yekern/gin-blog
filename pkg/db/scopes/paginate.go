@@ -1,15 +1,8 @@
-package db
+package scopes
 
-import (
-	"gorm.io/gorm"
-)
+import "gorm.io/gorm"
 
-func (m *Model) Paginate(page, pageSize int) *gorm.DB {
-	return m.Query().Scopes(m.page(page, pageSize))
-}
-
-func (m *Model) page(page, pageSize int) func(db *gorm.DB) *gorm.DB {
-
+func Paginate(page, pageSize int) func(db *gorm.DB) *gorm.DB {
 	return func(db *gorm.DB) *gorm.DB {
 		if page == 0 {
 			page = 1
