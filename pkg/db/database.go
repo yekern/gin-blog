@@ -28,7 +28,7 @@ func InitDatabase() {
 			SlowThreshold:             200 * time.Millisecond,
 			Colorful:                  false,
 			IgnoreRecordNotFoundError: true,
-			LogLevel:                  logger.Info,
+			LogLevel:                  logger.Error,
 		},
 	)
 	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{

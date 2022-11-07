@@ -19,7 +19,7 @@
     "max_number": 15,
     "compress": true,
     "stack": true,
-    "level": "debug"
+    "level": "info"
   },
   "redis": {
     "host": "",
