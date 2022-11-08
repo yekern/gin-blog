@@ -27,7 +27,13 @@ type UserFrom struct {
 }
 
 // Create 创建用户
-func (s *UserService) Create(user *model.User) error {
+func (s *UserService) Create(userForm *UserFrom) error {
+	user := &model.User{
+		Nickname: userForm.Nickname,
+		Username: userForm.Username,
+		Password: userForm.Password,
+		Status:   userForm.Status,
+	}
 	result := s.db.Query().Create(user)
 	if result.Error != nil {
 		return result.Error

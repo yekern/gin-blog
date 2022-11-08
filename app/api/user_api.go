@@ -2,7 +2,6 @@ package api
 
 import (
 	"esc.show/blog/app/service"
-	"esc.show/blog/model"
 	"esc.show/blog/pkg/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/gookit/validate"
@@ -29,7 +28,7 @@ func (a *UserApi) Index(ctx *gin.Context) {
 // Create 创建用户
 func (a *UserApi) Create(ctx *gin.Context) {
 
-	var user model.User
+	var user service.UserFrom
 	err := ctx.ShouldBind(&user)
 	if err != nil {
 		utils.NewResponse(ctx).Error(err.Error())
